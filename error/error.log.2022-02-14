@@ -1,7 +1,0 @@
-
-2022-02-14 19:43:24.227   ERROR test.Test01                                                   - method:test.Test01.main(Test01.java:14)
-error
-2022-02-14 19:47:25.210   ERROR test.Test01                                                   - method:test.Test01.main(Test01.java:14)
-error
-2022-02-14 19:47:40.535   ERROR test.Test01                                                   - method:test.Test01.main(Test01.java:14)
-error
