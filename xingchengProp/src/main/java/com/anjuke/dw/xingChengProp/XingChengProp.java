@@ -5,5 +5,7 @@ public class XingChengProp {
         System.out.println("hello git !");
         System.out.println("hello flink !");
         System.out.println("hot");
+        System.out.println("maste merge test!");
+
     }
 }
