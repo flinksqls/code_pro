@@ -17,5 +17,8 @@ public class XingChengProp {
 
         System.out.println("rebase");
         System.out.println("rebase2");
+
+        System.out.println("stash!");
+        System.out.println("hieihie");
     }
 }
