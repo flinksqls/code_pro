@@ -6,5 +6,6 @@ public class XingChengProp {
         System.out.println("hello flink !");
         System.out.println("hot");
         System.out.println("hot merge test ");
+        System.out.println("stash");
     }
 }
