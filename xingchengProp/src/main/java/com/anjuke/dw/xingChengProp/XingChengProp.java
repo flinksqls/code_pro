@@ -9,5 +9,6 @@ public class XingChengProp {
         System.out.println("hot merge test ");
         System.out.println("I am so happy !");
         System.out.println("hi Gitee !");
+        System.out.println("hi Gitlab !");
     }
 }
