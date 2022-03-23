@@ -10,5 +10,6 @@ public class XingChengProp {
         System.out.println("I am so happy !");
         System.out.println("hi Gitee !");
         System.out.println(" Gitee 编辑 !");
+        System.out.println("hi commit");
     }
 }
