@@ -11,7 +11,7 @@ public class XingChengProp {
         System.out.println("hi Gitee !");
         System.out.println(" Gitee 编辑 !");
         System.out.println("hi commit");
-        System.out.println("haha");
+        System.out.println("heihei");
         System.out.println("haha");
         System.out.println("haha");
 
