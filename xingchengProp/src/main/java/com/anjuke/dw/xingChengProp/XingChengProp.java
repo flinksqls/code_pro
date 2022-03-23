@@ -20,5 +20,6 @@ public class XingChengProp {
 
         System.out.println("stash!");
         System.out.println("hieihie");
+        System.out.println("stash");
     }
 }
