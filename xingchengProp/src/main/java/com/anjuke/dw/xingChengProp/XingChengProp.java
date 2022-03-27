@@ -26,11 +26,8 @@ public class XingChengProp {
         // 主类参数
         ParameterTool params = ParameterTool.fromArgs(args);
         groupId = params.get("groupId", groupId);
-        System.out.println(groupId);
         checkpointPath = params.get("checkpointPath");
-        System.out.println(checkpointPath);
         checkpointInterval = params.get("checkpointInterval");
-        System.out.println(checkpointInterval);
         //配置文件参数
         EnvironmentConfiguration envConf = EnvironmentConfiguration.getInstance();
 

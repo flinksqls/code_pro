@@ -9,6 +9,7 @@ import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TidbSinkFunction extends RichSinkFunction<XingchengPropDto> {
 
@@ -143,6 +144,7 @@ public class TidbSinkFunction extends RichSinkFunction<XingchengPropDto> {
         System.out.println(PASSWORD);
 
         conn = getConnection();
+        //System.out.println("conn:"+ conn );
         conn.setAutoCommit(false);
 
         insertStmt = conn.prepareStatement(sql);
@@ -153,7 +155,9 @@ public class TidbSinkFunction extends RichSinkFunction<XingchengPropDto> {
     //从连接池中抓起链接 conn
    public Connection  getConnection() throws PropertyVetoException, SQLException {
        synchronized (obj) {
-           jdbcurlDataSource = getJDBCURLDataSource(URL, USER, PASSWORD);
+           if(Objects.isNull(jdbcurlDataSource)) {
+               jdbcurlDataSource = getJDBCURLDataSource(URL, USER, PASSWORD);
+           }
        }
         return jdbcurlDataSource.getConnection();
    }
@@ -167,7 +171,7 @@ public class TidbSinkFunction extends RichSinkFunction<XingchengPropDto> {
        cpds.setPassword(password);
 
        //cpds.setInitialPoolSize(1)
-       cpds.setMinPoolSize(4);
+       cpds.setMinPoolSize(3);
        cpds.setMaxPoolSize(40);
        cpds.setAcquireIncrement(4);
        cpds.setMaxIdleTime(600);
@@ -183,7 +187,7 @@ public class TidbSinkFunction extends RichSinkFunction<XingchengPropDto> {
     @Override
     public void invoke(XingchengPropDto value, Context context) throws Exception {
          listBuffer.add(value);
-       // System.out.println("-------------------------执行sql---------------------------");
+        System.out.println("-------------------------执行sql---------------------------");
         insertStmt.setString(1, value.getCompanyUuid());
         insertStmt.setString(2, value.getEmployeeUuid());
         insertStmt.setString(3, value.getDeptUuid());
@@ -229,13 +233,13 @@ public class TidbSinkFunction extends RichSinkFunction<XingchengPropDto> {
         insertStmt.addBatch();
 
       //  System.out.println(insertStmt.toString());
-       // System.out.println("-------------------------执行sql 2---------------------------");
+        System.out.println("-------------------------执行sql 2---------------------------");
         if(listBuffer.size() >= 5 ) {
             insertStmt.executeBatch();
             conn.commit();
             listBuffer.clear();
         }
-      //  System.out.println("-------------------------执行sql 3---------------------------");
+        System.out.println("-------------------------执行sql 3---------------------------");
     }
     // 关闭时做清理工作
     @Override
@@ -245,7 +249,7 @@ public class TidbSinkFunction extends RichSinkFunction<XingchengPropDto> {
             insertStmt.close();
         }
         if(conn != null) {
-            conn.rollback();
+            //conn.rollback();
             conn.close();
         }
         System.out.println("jdbc 链接关闭 end ");
