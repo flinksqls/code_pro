@@ -1,6 +1,5 @@
-package com.anjuke.dw.xingChengProp;
+package com.anjuke.dw.xingChengProp.bean;
 
-import com.anjuke.dw.xingChengProp.bean.XingChengBean;
 import lombok.Data;
 
 @Data

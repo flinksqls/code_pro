@@ -1,15 +1,13 @@
 package com.anjuke.dw.xingChengProp.function;
 
 import com.anjuke.dw.xingChengProp.DTO.XingchengPropDto;
-import com.anjuke.dw.xingChengProp.TableKey;
-import com.anjuke.dw.xingChengProp.XingChengProp;
+import com.anjuke.dw.xingChengProp.bean.TableKey;
 import com.anjuke.dw.xingChengProp.bean.XingChengBean;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
-import org.checkerframework.checker.units.qual.K;
 
 import java.util.HashMap;
 
