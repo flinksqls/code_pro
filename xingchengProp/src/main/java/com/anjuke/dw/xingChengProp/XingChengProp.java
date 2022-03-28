@@ -3,14 +3,12 @@ package com.anjuke.dw.xingChengProp;
 import com.anjuke.dw.xingChengProp.DTO.XingchengPropDto;
 import com.anjuke.dw.xingChengProp.bean.TableKey;
 import com.anjuke.dw.xingChengProp.bean.XingChengBean;
-import com.anjuke.dw.xingChengProp.function.MessageFilterFunction;
-import com.anjuke.dw.xingChengProp.function.MsgMapFunction;
-import com.anjuke.dw.xingChengProp.function.Prc;
-import com.anjuke.dw.xingChengProp.function.TidbSinkFunction;
+import com.anjuke.dw.xingChengProp.function.*;
 import com.anjuke.dw.xingChengProp.util.EnvUtil;
 import com.anjuke.dw.xingChengProp.util.EnvironmentConfiguration;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.connector.jdbc.JdbcSink;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -48,7 +46,9 @@ public class XingChengProp {
                 .keyBy(TableKey::build)
                 .process(new Prc());
 
-        process.addSink(new TidbSinkFunction(envConf));
+        // process.addSink(new TidbSinkFunction2(envConf));
+        process.addSink( new TidbSink(envConf).getSink());
+
         //proces.print();
         env.execute();
     }
