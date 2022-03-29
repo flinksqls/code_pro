@@ -15,24 +15,24 @@ public class EnvironmentConfiguration implements Serializable {
     public static EnvironmentConfiguration instance = null;
 
     @PropertyKey("kafka.servers")
-    public String kafka_servers;
+    private String kafka_servers;
     @PropertyKey("kafka.client.id")
-    public String kafka_client_id;
+    private String kafka_client_id;
     @PropertyKey("kafka.topic")
-    public String kafka_topic;
+    private String kafka_topic;
     @PropertyKey("kafka.offset")
-    public String kafka_offset;
+    private String kafka_offset;
 
     @PropertyKey("tidb.url")
-    public String tidb_url;
+    private String tidb_url;
     @PropertyKey("tidb.table")
-    public String tidb_table;
+    private String tidb_table;
     @PropertyKey("tidb.driver")
-    public String tidb_driver;
+    private String tidb_driver;
     @PropertyKey("tidb.username")
-    public String tidb_username;
+    private String tidb_username;
     @PropertyKey("tidb.password")
-    public String tidb_password ;
+    private String tidb_password ;
 
     public static EnvironmentConfiguration getInstance(){
         if(Objects.isNull(instance)) {

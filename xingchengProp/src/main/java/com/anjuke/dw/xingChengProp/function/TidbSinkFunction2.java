@@ -149,38 +149,6 @@ public class TidbSinkFunction2 extends RichSinkFunction<XingchengPropDto> {
 
     }
 
-    //从连接池中抓起链接 conn
-   public Connection  getConnection() throws PropertyVetoException, SQLException {
-       synchronized (obj) {
-           if(Objects.isNull(jdbcurlDataSource)) {
-               jdbcurlDataSource = getJDBCURLDataSource(URL, USER, PASSWORD);
-           }
-       }
-        return jdbcurlDataSource.getConnection();
-   }
-   // 构造链接池
-   public ComboPooledDataSource getJDBCURLDataSource(String url ,String user, String password ) throws PropertyVetoException {
-       ComboPooledDataSource cpds  = new ComboPooledDataSource();
-
-       cpds.setDriverClass("com.mysql.cj.jdbc.Driver");
-       cpds.setJdbcUrl(url);
-       cpds.setUser(user);
-       cpds.setPassword(password);
-
-       //cpds.setInitialPoolSize(1)
-       cpds.setMinPoolSize(3);
-       cpds.setMaxPoolSize(40);
-       cpds.setAcquireIncrement(4);
-       cpds.setMaxIdleTime(600);
-
-       cpds.setIdleConnectionTestPeriod(300);
-       cpds.setPreferredTestQuery("SELECT 1");
-
-       return  cpds;
-
-   }
-
-
     @Override
     public void invoke(XingchengPropDto value, Context context) throws Exception {
 

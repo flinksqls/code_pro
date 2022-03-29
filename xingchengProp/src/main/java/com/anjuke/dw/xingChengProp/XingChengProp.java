@@ -28,7 +28,7 @@ public class XingChengProp {
         checkpointInterval = params.get("checkpointInterval");
         //配置文件参数
         EnvironmentConfiguration envConf = EnvironmentConfiguration.getInstance();
-
+       // System.out.println(envConf);
         FlinkKafkaConsumer<String> stringFlinkKafkaConsumer =
                 new FlinkKafkaConsumer<>(envConf.getKafka_topic(), new SimpleStringSchema()
                         ,envConf.getKafkaProperties(groupId) );

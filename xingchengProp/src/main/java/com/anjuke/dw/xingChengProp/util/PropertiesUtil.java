@@ -18,6 +18,8 @@ public class PropertiesUtil {
             properties.load(inputStream);
             Field[] fields = obj.getClass().getDeclaredFields();
             for (Field field : fields) {
+                //取消访问权限的检查
+                field.setAccessible(true);
                 PropertyKey annotation = field.getAnnotation(PropertyKey.class);
                 if(Objects.nonNull(annotation)){
                     String propertyKey = annotation.value();

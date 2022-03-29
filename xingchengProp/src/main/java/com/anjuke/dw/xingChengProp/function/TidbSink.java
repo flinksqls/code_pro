@@ -8,7 +8,12 @@ import org.apache.flink.connector.jdbc.JdbcExecutionOptions;
 import org.apache.flink.connector.jdbc.JdbcSink;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 
-public class TidbSink {
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class TidbSink implements Serializable {
     EnvironmentConfiguration envConf ;
     JdbcExecutionOptions optionsBuild ;
     JdbcConnectionOptions connectionBuild ;
@@ -97,11 +102,18 @@ public class TidbSink {
                 .build();
         connectionBuild = new JdbcConnectionOptions
                 .JdbcConnectionOptionsBuilder()
-                .withUrl(this.envConf.tidb_url)
-                .withDriverName(this.envConf.tidb_driver)
-                .withUsername(this.envConf.tidb_username)
-                .withPassword(this.envConf.tidb_password)
+                .withUrl(this.envConf.getTidb_url())
+                .withDriverName(this.envConf.getTidb_driver())
+                .withUsername(this.envConf.getTidb_username())
+                .withPassword(this.envConf.getTidb_password())
                 .build();
+        //connectionBuild = new JdbcConnectionOptions
+        //        .JdbcConnectionOptionsBuilder()
+        //        .withUrl("jdbc:mysql://qfolapdb.tdb.58dns.org:26700/tdb58_qf_olap_db?charset=utf8&rewriteBatchedStatements=true&allowMultiQueries=true&autoReconnect=true")
+        //        .withDriverName("com.mysql.cj.jdbc.Driver")
+        //        .withUsername("qfolap_yc")
+        //        .withPassword("348827216c7375d8")
+        //        .build();
     }
     public SinkFunction<XingchengPropDto> getSink(){
         return JdbcSink.sink(
@@ -150,7 +162,12 @@ public class TidbSink {
                     insertStmt.setInt(35, value.getKey_num());
                     insertStmt.setInt(36, value.getProp_follow_num());
                     insertStmt.setInt(37, value.getRecord_num());
-                   // System.out.println("sql 执行!!!");
+                   //System.out.println("sql 执行!!!");
+                   // System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                   // System.out.println(envConf.getTidb_url());
+                    //System.out.println(envConf.getTidb_username());
+                    //System.out.println(envConf.getTidb_password());
+
                 }
                 ,optionsBuild
                 ,connectionBuild
