@@ -3,6 +3,7 @@ package com.anjuke.dw.xingChengProp.function;
 import com.anjuke.dw.xingChengProp.DTO.XingchengPropDto;
 import com.anjuke.dw.xingChengProp.bean.TableKey;
 import com.anjuke.dw.xingChengProp.bean.XingChengBean;
+import com.anjuke.dw.xingChengProp.util.EnvUtil;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.configuration.Configuration;
@@ -21,6 +22,8 @@ public class Prc extends KeyedProcessFunction<TableKey, XingChengBean, Xingcheng
         super.open(parameters);
         ValueStateDescriptor<XingchengPropDto> stateDesc
                 = new ValueStateDescriptor<>("stateDesc", XingchengPropDto.class);
+        // 设置state 的过期时间
+        stateDesc.enableTimeToLive(EnvUtil.getTTLConfig(30));
         state = getRuntimeContext().getState(stateDesc);
     }
 
@@ -30,6 +33,7 @@ public class Prc extends KeyedProcessFunction<TableKey, XingChengBean, Xingcheng
        // System.out.println("进入 process。。。");
        // System.out.println(xingChengBean);
         if(state.value() == null ){
+
               // System.out.println("state is null ");
                XingchengPropDto xingchengPropDto = new XingchengPropDto();
                xingchengPropDto.setCompanyUuid(xingChengBean.getCompanyUuid());

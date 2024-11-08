@@ -1,0 +1,203 @@
+package com.anjuke.dw.xingChengProp.function;
+
+import com.anjuke.dw.xingChengProp.DTO.XingchengPropDto;
+import com.anjuke.dw.xingChengProp.util.EnvironmentConfiguration;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.apache.flink.configuration.Configuration;
+import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class TidbSinkFunction3 extends RichSinkFunction<XingchengPropDto> {
+
+    EnvironmentConfiguration envConf ;
+    private Connection conn ;
+    private PreparedStatement insertStmt ;
+
+
+    //连接池对象
+    ComboPooledDataSource jdbcurlDataSource ;
+    private String URL;
+    private String USER ;
+    private String PASSWORD ;
+
+    public TidbSinkFunction3(EnvironmentConfiguration envConf) {
+        this.envConf = envConf;
+    }
+
+    private String sql = "INSERT INTO da_qf_prop_xingcheng_emp_real_code\n" +
+            "(\n" +
+            "    companyuuid\n" +
+            "    ,employeeUuid\n" +
+            "    ,deptUuid\n" +
+            "    ,deptUuid1\n" +
+            "    ,deptUuid2\n" +
+            "    ,deptUuid3\n" +
+            "    ,deptUuid4\n" +
+            "    ,deptUuid5\n" +
+            "    ,deptUuid6\n" +
+            "    ,deptUuid7\n" +
+            "    ,deptUuid8\n" +
+            "    ,dayTime\n" +
+            "    ,house_type\n" +
+            "    ,property_add_num\n" +
+            "    ,property_activate_num\n" +
+            "    ,key_num\n" +
+            "    ,survey_num\n" +
+            "    ,common_entrust_num\n" +
+            "    ,exclusive_entrust_num\n" +
+            "    ,indemnity_entrust_num\n" +
+            "    ,media_add_num\n" +
+            "    ,vr_add_num\n" +
+            "    ,heyan_add_num\n" +
+            "    ,prop_follow_num\n" +
+            "    ,prop_tel_num\n" +
+            "    ,prop_tel_duration\n" +
+            "    ,record_num\n" +
+            "    ,cal_dt\n" +
+            "    ,photoadd_num\n" +
+            "    ,dept_uuid_path\n" +
+            "    ,dept_uuid_path_md5\n" +
+            "    ,photo_company_add_num\n" +
+            "\n" +
+            ") VALUES (\n" +
+            "    ?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            "    ,?\n" +
+            ")ON DUPLICATE KEY UPDATE \n" +
+            "\n" +
+            "property_add_num=?\n" +
+            ",property_activate_num=?\n" +
+            ",key_num=?\n"+
+            ",prop_follow_num=?\n"+
+            ",record_num=?\n"
+            ;
+
+    @Override
+    public void open(Configuration parameters) throws Exception {
+        super.open(parameters);
+        //System.out.println("jdbc 链接 初始化 end1" );
+        //System.out.println("jdbc 链接 初始化 2" );
+        URL = envConf.getTidb_url();
+        //System.out.println("URL:");
+        //System.out.println(URL);
+        USER = envConf.getTidb_username();
+        //System.out.println("USER:");
+        //System.out.println(USER);
+        PASSWORD = envConf.getTidb_password();
+        //System.out.println("PASSWORD:");
+        //System.out.println(PASSWORD);
+        // Class.forName("com.mysql.cj.jdbc.Driver");
+        conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        //System.out.println("conn");
+        //System.out.println(conn);
+
+       // conn = getConnection();
+        //System.out.println("conn:"+ conn );
+        conn.setAutoCommit(false);
+
+        insertStmt = conn.prepareStatement(sql);
+        System.out.println("jdbc 链接 初始化 done" );
+
+    }
+
+    @Override
+    public void invoke(XingchengPropDto value, Context context) throws Exception {
+
+        insertStmt.setString(1, value.getCompanyUuid());
+        insertStmt.setString(2, value.getEmployeeUuid());
+        insertStmt.setString(3, value.getDeptUuid());
+        insertStmt.setString(4, value.getDeptUuid1());
+        insertStmt.setString(5, value.getDeptUuid2());
+        insertStmt.setString(6, value.getDeptUuid3());
+        insertStmt.setString(7, value.getDeptUuid4());
+        insertStmt.setString(8, value.getDeptUuid5());
+        insertStmt.setString(9, value.getDeptUuid6());
+        insertStmt.setString(10, value.getDeptUuid7());
+
+        insertStmt.setString(11, value.getDeptUuid8());
+
+        insertStmt.setString(12, value.getAddTime_date());
+        insertStmt.setString(13, value.getTradeKind());
+        insertStmt.setInt(14, value.getProperty_activate_num());
+        insertStmt.setInt(15, value.getProperty_add_num());
+        insertStmt.setInt(16, value.getKey_num());
+        insertStmt.setInt(17, value.getSurvey_num());
+        insertStmt.setInt(18, value.getCommon_entrust_num());
+        insertStmt.setInt(19, value.getExclusive_entrust_num());
+        insertStmt.setInt(20, value.getIndemnity_entrust_num());
+
+        insertStmt.setInt(21, value.getMedia_add_num());
+        insertStmt.setInt(22, value.getVr_add_num());
+        insertStmt.setInt(23, value.getHeyan_add_num());
+        insertStmt.setInt(24, value.getProp_follow_num());
+        insertStmt.setInt(25, value.getProp_tel_num());
+        insertStmt.setInt(26, value.getProp_tel_duration());
+        insertStmt.setInt(27, value.getRecord_num());
+        insertStmt.setString(28, value.getUpdateTime_date());
+        insertStmt.setInt(29, value.getPhotoadd_num());
+        insertStmt.setString(30, value.getDept_uuid_path());
+        insertStmt.setString(31, value.getDept_uuid_substr_concat());
+        insertStmt.setInt(32, value.getPhoto_company_add_num());
+// --------insert -------------
+   // update column
+        insertStmt.setInt(33, value.getProperty_add_num());
+        insertStmt.setInt(34, value.getProperty_activate_num());
+        insertStmt.setInt(35, value.getKey_num());
+        insertStmt.setInt(36, value.getProp_follow_num());
+        insertStmt.setInt(37, value.getRecord_num());
+        insertStmt.addBatch();
+
+      //  System.out.println(insertStmt.toString());
+
+            insertStmt.executeBatch();
+            conn.commit();
+
+
+        System.out.println("-------------------------执行sql 3---------------------------");
+    }
+    // 关闭时做清理工作
+    @Override
+    public void close() throws Exception {
+        super.close();
+        if(insertStmt != null) {
+            insertStmt.close();
+        }
+        if(conn != null) {
+            //conn.rollback();
+            conn.close();
+        }
+        System.out.println("jdbc 链接关闭 end!!! ");
+    }
+}

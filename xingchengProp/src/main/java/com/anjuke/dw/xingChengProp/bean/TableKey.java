@@ -21,6 +21,9 @@ public class TableKey {
     String dept_uuid_path;
     String dept_uuid_substr_concat;
 
+    public TableKey() {
+    }
+
     public TableKey(String companyUuid, String employeeUuid, String deptUuid, String deptUuid1, String deptUuid2, String deptUuid3, String deptUuid4, String deptUuid5, String deptUuid6, String deptUuid7, String deptUuid8, String addTime_date, String updateTime_date, String tradeKind, String dept_uuid_path, String dept_uuid_substr_concat) {
         this.companyUuid = companyUuid;
         this.employeeUuid = employeeUuid;

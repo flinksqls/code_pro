@@ -1,6 +1,8 @@
 package com.anjuke.dw.xingChengProp.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.flink.api.common.state.StateTtlConfig;
+import org.apache.flink.api.common.time.Time;
 import org.apache.flink.runtime.state.storage.FileSystemCheckpointStorage;
 import org.apache.flink.shaded.netty4.io.netty.util.internal.StringUtil;
 import org.apache.flink.streaming.api.environment.CheckpointConfig;
@@ -21,5 +23,15 @@ public class EnvUtil {
         env.setParallelism(4);
         return  env;
     }
+    public static StateTtlConfig  getTTLConfig(int  days ){
+        StateTtlConfig build = StateTtlConfig
+                .newBuilder(Time.days(days))
+                .setUpdateType(StateTtlConfig.UpdateType.OnCreateAndWrite)
+                .setStateVisibility(StateTtlConfig.StateVisibility.NeverReturnExpired)
+                //.cleanupFullSnapshot()
+                .build();
+        return  build ;
+    }
+
 
 }

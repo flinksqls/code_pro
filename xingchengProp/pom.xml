@@ -139,9 +139,13 @@
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-jdbc_2.11</artifactId>
             <version>${flink.version}</version>
-
         </dependency>
-
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.12</version>
+            <scope>provided</scope>
+        </dependency>
 
 
     </dependencies>
@@ -151,6 +155,11 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            <mainClass>com.anjuke.dw.xingChengProp.Test2</mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>

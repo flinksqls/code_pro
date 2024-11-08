@@ -2,6 +2,7 @@ package com.anjuke.dw.xingChengProp.function;
 
 import com.anjuke.dw.xingChengProp.DTO.XingchengPropDto;
 import com.anjuke.dw.xingChengProp.util.EnvironmentConfiguration;
+import com.anjuke.dw.xingChengProp.util.PropertiesUtil;
 import com.google.errorprone.annotations.Var;
 import org.apache.flink.connector.jdbc.JdbcConnectionOptions;
 import org.apache.flink.connector.jdbc.JdbcExecutionOptions;
@@ -94,7 +95,10 @@ public class TidbSink implements Serializable {
             ",record_num=?\n"
             ;
     public TidbSink(EnvironmentConfiguration envConf) {
-        this.envConf = envConf;
+        //this.envConf = envConf;
+        EnvironmentConfiguration instance =  PropertiesUtil.inintProperties("config.properties", new EnvironmentConfiguration());
+        this.envConf = instance ;
+        System.out.println(envConf.getTidb_username());
         optionsBuild = JdbcExecutionOptions.builder()
                 .withBatchSize(1000)
                 .withBatchIntervalMs(100)
