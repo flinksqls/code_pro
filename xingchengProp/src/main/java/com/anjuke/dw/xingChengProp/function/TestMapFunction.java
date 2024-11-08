@@ -5,7 +5,6 @@ import com.anjuke.dw.xingChengProp.util.EnvironmentConfiguration;
 import com.anjuke.dw.xingChengProp.util.PropertiesUtil;
 import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.configuration.Configuration;
-import sun.rmi.runtime.Log;
 
 import javax.swing.*;
 import  org.apache.log4j.Logger;

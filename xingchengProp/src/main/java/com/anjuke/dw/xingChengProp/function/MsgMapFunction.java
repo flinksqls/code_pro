@@ -4,7 +4,6 @@ import com.anjuke.dw.xingChengProp.bean.RawXingChengBean;
 import com.anjuke.dw.xingChengProp.bean.XingChengBean;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.beans.binding.ObjectExpression;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.shaded.netty4.io.netty.util.internal.StringUtil;

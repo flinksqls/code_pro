@@ -1,10 +1,8 @@
 package com.anjuke.dw.xingChengProp.function;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.internal.ir.ReturnNode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.functions.FilterFunction;
-import org.apache.flink.shaded.netty4.io.netty.util.internal.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;

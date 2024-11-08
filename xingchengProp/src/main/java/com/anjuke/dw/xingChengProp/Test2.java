@@ -12,6 +12,7 @@ public class Test2 {
         log.info("abc");
         while(flag){
             System.out.println("哥哥，我想你了");
+            System.out.println("收到！");
             Thread.sleep(2000);
         }
     }

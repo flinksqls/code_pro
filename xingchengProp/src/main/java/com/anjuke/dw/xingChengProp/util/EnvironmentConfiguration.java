@@ -1,10 +1,8 @@
 package com.anjuke.dw.xingChengProp.util;
 
-import jdk.nashorn.internal.ir.ReturnNode;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
 
 import java.io.Serializable;
 import java.util.Objects;
